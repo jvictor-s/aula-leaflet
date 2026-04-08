@@ -17,6 +17,11 @@
 </head>
 <body>
     
+    <div id="form">
+        <input id="input-local" type="text" placeHolder="digite um endereço">
+        <button id="btn-buscar">Buscar</button>
+    </div>
+
     <div id="map"></div>
 
     <script>
@@ -27,7 +32,7 @@
             draggable:true,
             icon: L.icon({
                 iconUrl: 'https://cdn-icons-png.flaticon.com/512/504/504276.png',
-                iconSize: [48, 48]
+                iconSize: [36, 36]
             })
         }).addTo(map);
 
@@ -42,6 +47,14 @@
             marker.setLatLng(e.latlng);
         });
 
+        const botao = document.getElementById('btn-buscar');
+        const input = document.getElementById('input-local');
+
+        botao.addEventListener('click', ()=>{
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${input.value}`)
+                .then(response => response.json())
+                .then(data => console.log(data[0]))
+        });
 
     </script>
 
