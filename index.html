@@ -20,14 +20,16 @@
     <div id="map"></div>
 
     <script>
-        var map = L.map('map',{
-            zoomControl: false,
-            dragging: false,
-            minZoom: 15,
-            maxZoom: 15,
-            doubleClickZoom: false,
-            keyboard: false
-        }).setView([-6.8881, -38.5572], 15);
+        let center  = [-6.8881, -38.5572];
+        var map = L.map('map').setView(center, 15);
+
+        let marker = L.marker(center,{
+            draggable:true,
+            icon: L.icon({
+                iconUrl: 'https://cdn-icons-png.flaticon.com/512/504/504276.png',
+                iconSize: [48, 48]
+            })
+        }).addTo(map);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -35,6 +37,10 @@
         }).addTo(map);
 
         map.locate({setView:true, maxZoom: 15});
+
+        map.on('locationfound', e=>{
+            marker.setLatLng(e.latlng);
+        });
 
 
     </script>
